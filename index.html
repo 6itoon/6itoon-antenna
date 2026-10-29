@@ -6,15 +6,15 @@
   <title>شیطون انتن | Sheitoon Antenna</title>
   <meta name="description" content="ساخت پروفایل آنتن آیفون با UUID یکتا - شیطون انتن">
   <meta name="theme-color" content="#0c0614">
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #07040f;
       --card: rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.08);
-      --purple: #a855f7;
-      --purple-dark: #7c3aed;
-      --pink: #ec4899;
+      --red: #ef4444;
+      --red-dark: #dc2626;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
@@ -37,27 +37,27 @@
     .bg-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.35;
+      filter: blur(110px);
+      opacity: 0.3;
       pointer-events: none;
       z-index: 0;
     }
     .glow-1 {
-      width: 400px; height: 400px;
-      background: var(--purple);
-      top: -120px; right: -100px;
+      width: 420px; height: 420px;
+      background: #ef4444;
+      top: -140px; right: -120px;
     }
     .glow-2 {
-      width: 300px; height: 300px;
-      background: var(--pink);
-      bottom: 10%; left: -80px;
-      opacity: 0.2;
+      width: 280px; height: 280px;
+      background: #b91c1c;
+      bottom: 8%; left: -90px;
+      opacity: 0.22;
     }
     .glow-3 {
-      width: 200px; height: 200px;
-      background: #6366f1;
-      top: 45%; right: 10%;
-      opacity: 0.15;
+      width: 180px; height: 180px;
+      background: #7f1d1d;
+      top: 48%; right: 8%;
+      opacity: 0.18;
     }
 
     .container {
@@ -70,36 +70,29 @@
 
     .header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       animation: fadeDown 0.7s ease;
     }
-    .logo {
-      width: 78px;
-      height: 78px;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin: 0 auto 16px;
-      box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4);
-      position: relative;
+    .logo-wrap {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.45);
+      border: 2px solid rgba(239, 68, 68, 0.35);
+      background: #000;
     }
-    .logo::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 27px;
-      background: linear-gradient(135deg, #a855f7, #ec4899, #6366f1);
-      z-index: -1;
-      opacity: 0.6;
-      filter: blur(8px);
+    .logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .header h1 {
-      font-size: 1.85rem;
+      font-size: 1.7rem;
       font-weight: 800;
-      background: linear-gradient(90deg, #e9d5ff, #f9a8d4, #c4b5fd);
+      background: linear-gradient(90deg, #fca5a5, #ef4444, #f87171);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -107,9 +100,8 @@
     }
     .header p {
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 6px;
-      font-weight: 400;
+      font-size: 0.92rem;
+      margin-top: 5px;
     }
 
     .card {
@@ -118,17 +110,17 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: 28px;
-      padding: 28px 22px;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      padding: 26px 22px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.55);
       animation: fadeUp 0.7s ease 0.1s both;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .form-label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       color: var(--muted);
       margin-bottom: 8px;
@@ -140,10 +132,10 @@
     }
     select, input[type="text"] {
       width: 100%;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 16px;
-      padding: 15px 18px;
+      padding: 14px 18px;
       color: var(--text);
       font-size: 1rem;
       font-weight: 500;
@@ -152,9 +144,9 @@
       transition: all 0.25s ease;
     }
     select:focus, input:focus {
-      border-color: var(--purple);
-      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
-      background: rgba(0,0,0,0.45);
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.22);
+      background: rgba(0,0,0,0.5);
     }
     select {
       cursor: pointer;
@@ -174,29 +166,29 @@
       width: 100%;
       border: none;
       border-radius: 18px;
-      padding: 17px;
-      font-size: 1.1rem;
+      padding: 16px;
+      font-size: 1.05rem;
       font-weight: 700;
       color: white;
       cursor: pointer;
-      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      box-shadow: 0 10px 28px rgba(239, 68, 68, 0.4);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .btn::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #c084fc, #f472b6);
+      background: linear-gradient(135deg, #f87171, #dc2626);
       opacity: 0;
       transition: opacity 0.3s;
     }
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 14px 36px rgba(239, 68, 68, 0.5);
     }
     .btn:hover::before { opacity: 1; }
     .btn:active { transform: translateY(-1px); }
@@ -215,26 +207,26 @@
       border: 1px solid rgba(34, 197, 94, 0.35);
       color: #4ade80;
       border-radius: 16px;
-      padding: 14px;
+      padding: 13px;
       text-align: center;
       font-weight: 600;
-      margin-top: 16px;
+      margin-top: 14px;
       animation: popIn 0.4s ease;
     }
 
     .steps-card {
-      margin-top: 24px;
+      margin-top: 22px;
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 20px;
+      padding: 18px;
       animation: fadeUp 0.7s ease 0.2s both;
     }
     .steps-title {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      color: #e9d5ff;
-      margin-bottom: 14px;
+      color: #fca5a5;
+      margin-bottom: 13px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -242,24 +234,24 @@
     .step {
       display: flex;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 11px;
       align-items: flex-start;
     }
     .step:last-child { margin-bottom: 0; }
     .step-num {
-      width: 26px;
-      height: 26px;
-      min-width: 26px;
-      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      width: 25px;
+      height: 25px;
+      min-width: 25px;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
     .step-text {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--muted);
       line-height: 1.5;
       padding-top: 2px;
@@ -269,35 +261,35 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      margin-top: 22px;
+      gap: 7px;
+      margin-top: 20px;
     }
     .op {
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      color: #d8b4fe;
-      font-size: 0.75rem;
-      padding: 5px 12px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.22);
+      color: #fca5a5;
+      font-size: 0.73rem;
+      padding: 4px 11px;
       border-radius: 20px;
       font-weight: 500;
     }
 
     .footer {
       text-align: center;
-      margin-top: 36px;
+      margin-top: 32px;
       animation: fadeUp 0.7s ease 0.3s both;
     }
     .footer a {
-      color: #c084fc;
+      color: #f87171;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.2s;
     }
-    .footer a:hover { color: #e9d5ff; }
+    .footer a:hover { color: #fca5a5; }
     .footer p {
       color: #64748b;
-      font-size: 0.8rem;
-      margin-top: 8px;
+      font-size: 0.78rem;
+      margin-top: 7px;
     }
 
     @keyframes fadeDown {
@@ -327,7 +319,9 @@
 
   <div class="container">
     <div class="header">
-      <div class="logo">😈</div>
+      <div class="logo-wrap">
+        <img src="logo.jpg" alt="شیطون انتن">
+      </div>
       <h1>شیطون انتن</h1>
       <p>ساخت پروفایل آنتن با UUID یکتا</p>
     </div>
@@ -357,7 +351,7 @@
         </div>
 
         <button type="submit" class="btn" id="submitBtn">
-          <span>😈 ساخت و دانلود پروفایل</span>
+          <span>ساخت و دانلود پروفایل</span>
         </button>
       </form>
 
@@ -533,7 +527,7 @@
         URL.revokeObjectURL(url);
 
         btn.classList.remove('loading');
-        btn.querySelector('span').innerHTML = '😈 ساخت و دانلود پروفایل';
+        btn.querySelector('span').textContent = 'ساخت و دانلود پروفایل';
         msg.style.display = 'block';
         setTimeout(() => { msg.style.display = 'none'; }, 4000);
       }, 600);
