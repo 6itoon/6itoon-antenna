@@ -2,86 +2,73 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>شیطون انتن | Sheitoon Antenna</title>
-  <meta name="description" content="ساخت پروفایل آنتن آیفون با UUID یکتا - شیطون انتن">
-  <meta name="theme-color" content="#0c0614">
+  <meta name="description" content="ساخت پروفایل قوی آنتن آیفون با UUID یکتا - شیطون انتن">
+  <meta name="theme-color" content="#07040f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #07040f;
-      --card: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
+      --card: rgba(255,255,255,0.045);
+      --border: rgba(255,255,255,0.09);
       --red: #ef4444;
-      --red-dark: #dc2626;
+      --red-glow: rgba(239,68,68,0.45);
       --text: #f8fafc;
       --muted: #94a3b8;
+      --success: #22c55e;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Vazirmatn', system-ui, sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif; }
 
     body {
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      min-height: 100dvh;
       overflow-x: hidden;
-      position: relative;
+      -webkit-font-smoothing: antialiased;
     }
 
     .bg-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(110px);
-      opacity: 0.3;
+      filter: blur(100px);
       pointer-events: none;
       z-index: 0;
     }
-    .glow-1 {
-      width: 420px; height: 420px;
-      background: #ef4444;
-      top: -140px; right: -120px;
-    }
-    .glow-2 {
-      width: 280px; height: 280px;
-      background: #b91c1c;
-      bottom: 8%; left: -90px;
-      opacity: 0.22;
-    }
-    .glow-3 {
-      width: 180px; height: 180px;
-      background: #7f1d1d;
-      top: 48%; right: 8%;
-      opacity: 0.18;
-    }
+    .g1 { width: 380px; height: 380px; background: #ef4444; top: -120px; right: -100px; opacity: 0.28; }
+    .g2 { width: 260px; height: 260px; background: #991b1b; bottom: 5%; left: -80px; opacity: 0.2; }
+    .g3 { width: 160px; height: 160px; background: #7f1d1d; top: 42%; right: 5%; opacity: 0.15; }
 
     .container {
       position: relative;
       z-index: 1;
-      max-width: 440px;
+      max-width: 420px;
       margin: 0 auto;
-      padding: 28px 18px 50px;
+      padding: 32px 18px 48px;
+      padding-bottom: max(48px, env(safe-area-inset-bottom));
     }
 
     .header {
       text-align: center;
-      margin-bottom: 28px;
-      animation: fadeDown 0.7s ease;
+      margin-bottom: 26px;
+      animation: fadeDown 0.65s ease both;
     }
+
     .logo-wrap {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 14px;
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 16px;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0 0 40px rgba(239, 68, 68, 0.45);
-      border: 2px solid rgba(239, 68, 68, 0.35);
+      border: 2px solid rgba(239,68,68,0.4);
+      box-shadow: 0 0 0 6px rgba(239,68,68,0.08), 0 0 36px var(--red-glow);
       background: #000;
+      animation: pulseGlow 3.5s ease-in-out infinite;
     }
     .logo-wrap img {
       width: 100%;
@@ -89,109 +76,111 @@
       object-fit: cover;
       display: block;
     }
+
     .header h1 {
-      font-size: 1.7rem;
+      font-size: 1.65rem;
       font-weight: 800;
-      background: linear-gradient(90deg, #fca5a5, #ef4444, #f87171);
+      background: linear-gradient(90deg, #fca5a5, #ef4444 50%, #f87171);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
     }
     .header p {
       color: var(--muted);
-      font-size: 0.92rem;
-      margin-top: 5px;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      font-weight: 400;
     }
 
     .card {
       background: var(--card);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 26px 22px;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.55);
-      animation: fadeUp 0.7s ease 0.1s both;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+      animation: fadeUp 0.65s ease 0.08s both;
     }
 
-    .form-group {
-      margin-bottom: 18px;
-    }
+    .form-group { margin-bottom: 16px; }
     .form-label {
       display: block;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--muted);
-      margin-bottom: 8px;
-      padding-right: 4px;
+      margin-bottom: 7px;
+      padding-right: 2px;
     }
 
-    .select-wrap, .input-wrap {
-      position: relative;
-    }
+    .select-wrap, .input-wrap { position: relative; }
+
     select, input[type="text"] {
       width: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.45);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 14px 18px;
+      border-radius: 14px;
+      padding: 13px 16px;
       color: var(--text);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 500;
       outline: none;
       appearance: none;
-      transition: all 0.25s ease;
-    }
-    select:focus, input:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.22);
-      background: rgba(0,0,0,0.5);
+      -webkit-appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     }
     select {
       cursor: pointer;
-      padding-left: 40px;
+      padding-left: 38px;
     }
+    select:focus, input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.2);
+      background: rgba(0,0,0,0.55);
+    }
+    select option { background: #1a0a12; color: #fff; }
+
     .select-arrow {
       position: absolute;
-      left: 16px;
+      left: 14px;
       top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
+      opacity: 0.8;
     }
 
     .btn {
       width: 100%;
       border: none;
-      border-radius: 18px;
-      padding: 16px;
-      font-size: 1.05rem;
+      border-radius: 16px;
+      padding: 15px;
+      font-size: 1.02rem;
       font-weight: 700;
-      color: white;
+      color: #fff;
       cursor: pointer;
       background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-      box-shadow: 0 10px 28px rgba(239, 68, 68, 0.4);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(239,68,68,0.38);
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s;
       position: relative;
       overflow: hidden;
-      margin-top: 6px;
+      margin-top: 4px;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn::before {
+    .btn::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, #f87171, #dc2626);
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.25s;
     }
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 36px rgba(239, 68, 68, 0.5);
-    }
-    .btn:hover::before { opacity: 1; }
-    .btn:active { transform: translateY(-1px); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(239,68,68,0.48); }
+    .btn:hover::after { opacity: 1; }
+    .btn:active { transform: translateY(0); }
     .btn span {
       position: relative;
       z-index: 1;
@@ -200,136 +189,139 @@
       justify-content: center;
       gap: 8px;
     }
+    .btn.loading { pointer-events: none; opacity: 0.8; }
+    .btn.loading span { opacity: 0.75; }
 
     .success {
       display: none;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.3);
       color: #4ade80;
-      border-radius: 16px;
-      padding: 13px;
+      border-radius: 14px;
+      padding: 12px;
       text-align: center;
       font-weight: 600;
+      font-size: 0.92rem;
       margin-top: 14px;
-      animation: popIn 0.4s ease;
+      animation: popIn 0.35s ease;
     }
 
-    .steps-card {
-      margin-top: 22px;
+    .steps {
+      margin-top: 20px;
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px;
-      animation: fadeUp 0.7s ease 0.2s both;
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      animation: fadeUp 0.65s ease 0.16s both;
     }
     .steps-title {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: #fca5a5;
-      margin-bottom: 13px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
     .step {
       display: flex;
-      gap: 12px;
-      margin-bottom: 11px;
+      gap: 11px;
+      margin-bottom: 10px;
       align-items: flex-start;
     }
     .step:last-child { margin-bottom: 0; }
     .step-num {
-      width: 25px;
-      height: 25px;
-      min-width: 25px;
+      width: 23px;
+      height: 23px;
+      min-width: 23px;
       background: linear-gradient(135deg, #ef4444, #b91c1c);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
     .step-text {
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       color: var(--muted);
-      line-height: 1.5;
-      padding-top: 2px;
+      line-height: 1.45;
+      padding-top: 1px;
     }
 
     .ops {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 7px;
-      margin-top: 20px;
+      gap: 6px;
+      margin-top: 18px;
     }
     .op {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.22);
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
       color: #fca5a5;
-      font-size: 0.73rem;
-      padding: 4px 11px;
+      font-size: 0.7rem;
+      padding: 4px 10px;
       border-radius: 20px;
       font-weight: 500;
     }
 
     .footer {
       text-align: center;
-      margin-top: 32px;
-      animation: fadeUp 0.7s ease 0.3s both;
+      margin-top: 28px;
+      animation: fadeUp 0.65s ease 0.24s both;
     }
     .footer a {
       color: #f87171;
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.9rem;
       transition: color 0.2s;
     }
     .footer a:hover { color: #fca5a5; }
     .footer p {
       color: #64748b;
-      font-size: 0.78rem;
-      margin-top: 7px;
+      font-size: 0.75rem;
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 0; transform: translateY(-16px); }
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(18px); }
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.9); }
+      from { opacity: 0; transform: scale(0.92); }
       to { opacity: 1; transform: scale(1); }
     }
-
-    .btn.loading {
-      pointer-events: none;
-      opacity: 0.85;
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(239,68,68,0.08), 0 0 36px var(--red-glow); }
+      50% { box-shadow: 0 0 0 8px rgba(239,68,68,0.12), 0 0 48px rgba(239,68,68,0.55); }
     }
-    .btn.loading span { opacity: 0.7; }
   </style>
 </head>
 <body>
-  <div class="bg-glow glow-1"></div>
-  <div class="bg-glow glow-2"></div>
-  <div class="bg-glow glow-3"></div>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="bg-glow g3"></div>
 
   <div class="container">
-    <div class="header">
+    <header class="header">
       <div class="logo-wrap">
-        <img src="logo.jpg" alt="شیطون انتن">
+        <img src="logo.jpg" alt="شیطون انتن" width="112" height="112">
       </div>
       <h1>شیطون انتن</h1>
-      <p>ساخت پروفایل آنتن با UUID یکتا</p>
-    </div>
+      <p>ساخت پروفایل قوی آنتن با UUID یکتا</p>
+    </header>
 
     <div class="card">
-      <form id="config-form">
+      <form id="config-form" autocomplete="off">
         <div class="form-group">
-          <label class="form-label">انتخاب اپراتور</label>
+          <label class="form-label" for="apn">انتخاب اپراتور</label>
           <div class="select-wrap">
             <select id="apn" required>
               <option value="mcinet">همراه اول (MCI)</option>
@@ -344,9 +336,9 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">نام پروفایل <span style="opacity:0.6">(اختیاری)</span></label>
+          <label class="form-label" for="profileName">نام پروفایل <span style="opacity:.55">(اختیاری)</span></label>
           <div class="input-wrap">
-            <input type="text" id="profileName" placeholder="مثلاً: شیطون - همراه اول">
+            <input type="text" id="profileName" placeholder="مثلاً: شیطون - همراه اول" maxlength="40">
           </div>
         </div>
 
@@ -355,22 +347,18 @@
         </button>
       </form>
 
-      <div class="success" id="successMsg">
-        ✅ پروفایل با موفقیت دانلود شد!
-      </div>
+      <div class="success" id="successMsg">پروفایل با موفقیت دانلود شد</div>
     </div>
 
-    <div class="steps-card">
-      <div class="steps-title">
-        <span>📋</span> مراحل نصب سریع
-      </div>
+    <div class="steps">
+      <div class="steps-title">مراحل نصب سریع</div>
       <div class="step">
         <div class="step-num">۱</div>
         <div class="step-text">ریست شبکه انجام بده</div>
       </div>
       <div class="step">
         <div class="step-num">۲</div>
-        <div class="step-text">فایل رو در Files ذخیره کن</div>
+        <div class="step-text">فایل را در Files ذخیره کن</div>
       </div>
       <div class="step">
         <div class="step-num">۳</div>
@@ -378,11 +366,11 @@
       </div>
       <div class="step">
         <div class="step-num">۴</div>
-        <div class="step-text">Data Roaming و VoLTE رو روشن کن</div>
+        <div class="step-text">Data Roaming و VoLTE را روشن کن</div>
       </div>
       <div class="step">
         <div class="step-num">۵</div>
-        <div class="step-text">حالت هواپیما رو یک‌بار روشن و خاموش کن</div>
+        <div class="step-text">حالت هواپیما را یک‌بار روشن و خاموش کن</div>
       </div>
     </div>
 
@@ -395,132 +383,156 @@
       <span class="op">شاتل</span>
     </div>
 
-    <div class="footer">
-      <a href="https://github.com/6itoon/6itoon-antenna" target="_blank">گیت‌هاب پروژه</a>
-      <p>قبل از نصب پروفایل جدید، پروفایل قبلی رو حذف کن</p>
-    </div>
+    <footer class="footer">
+      <a href="https://github.com/6itoon/6itoon-antenna" target="_blank" rel="noopener">گیت‌هاب پروژه</a>
+      <p>قبل از نصب پروفایل جدید، پروفایل قبلی را حذف کن</p>
+    </footer>
   </div>
 
   <script>
-    function generateUUID() {
+    function uuid() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
+        var r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
       });
     }
 
     document.getElementById('config-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const btn = document.getElementById('submitBtn');
-      const msg = document.getElementById('successMsg');
-      
+      var btn = document.getElementById('submitBtn');
+      var msg = document.getElementById('successMsg');
+      var apn = document.getElementById('apn').value;
+      var nameInput = document.getElementById('profileName').value.trim();
+      var profileName = nameInput || ('شیطون انتن - ' + apn);
+
       btn.classList.add('loading');
       btn.querySelector('span').textContent = 'در حال ساخت...';
 
-      setTimeout(() => {
-        const apn = document.getElementById('apn').value;
-        const profileName = document.getElementById('profileName').value || `شیطون انتن - ${apn}`;
-        const uuid1 = generateUUID();
-        const uuid2 = generateUUID();
-        const uuid3 = generateUUID();
+      setTimeout(function() {
+        var u1 = uuid(), u2 = uuid(), u3 = uuid();
 
-        const plist = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>PayloadContent</key>
-  <array>
-    <dict>
-      <key>PayloadDisplayName</key>
-      <string>Cellular</string>
-      <key>PayloadIdentifier</key>
-      <string>com.apple.cellular.${uuid1}</string>
-      <key>PayloadType</key>
-      <string>com.apple.cellular</string>
-      <key>PayloadUUID</key>
-      <string>${uuid1}</string>
-      <key>PayloadVersion</key>
-      <integer>1</integer>
-      <key>APNs</key>
-      <array>
-        <dict>
-          <key>AllowedProtocolMask</key>
-          <integer>3</integer>
-          <key>AllowedProtocolMaskInDomesticRoaming</key>
-          <integer>3</integer>
-          <key>AllowedProtocolMaskInRoaming</key>
-          <integer>3</integer>
-          <key>AuthenticationType</key>
-          <string>PAP</string>
-          <key>DefaultProtocolMask</key>
-          <integer>3</integer>
-          <key>EnableXLAT464</key>
-          <true/>
-          <key>Name</key>
-          <string>${apn}</string>
-          <key>ProxyServer</key>
-          <string></string>
-          <key>Username</key>
-          <string></string>
-        </dict>
-        <dict>
-          <key>AllowedProtocolMask</key>
-          <integer>1</integer>
-          <key>AllowedProtocolMaskInDomesticRoaming</key>
-          <integer>1</integer>
-          <key>AllowedProtocolMaskInRoaming</key>
-          <integer>1</integer>
-          <key>AuthenticationType</key>
-          <string>CHAP</string>
-          <key>DefaultProtocolMask</key>
-          <integer>1</integer>
-          <key>EnableXLAT464</key>
-          <true/>
-          <key>Name</key>
-          <string>${apn}</string>
-          <key>Username</key>
-          <string></string>
-        </dict>
-      </array>
-      <key>AttachAPN</key>
-      <dict>
-        <key>AllowedProtocolMask</key>
-        <integer>3</integer>
-        <key>AuthenticationType</key>
-        <string>PAP</string>
-        <key>Name</key>
-        <string>${apn}</string>
-        <key>Username</key>
-        <string></string>
-      </dict>
-    </dict>
-  </array>
-  <key>PayloadDisplayName</key>
-  <string>${profileName}</string>
-  <key>PayloadIdentifier</key>
-  <string>com.sheitoon.antenna.${uuid2}</string>
-  <key>PayloadRemovalDisallowed</key>
-  <false/>
-  <key>PayloadType</key>
-  <string>Configuration</string>
-  <key>PayloadUUID</key>
-  <string>${uuid3}</string>
-  <key>PayloadVersion</key>
-  <integer>1</integer>
-  <key>PayloadDescription</key>
-  <string>پروفایل بازگردانی آنتن - شیطون انتن</string>
-  <key>PayloadOrganization</key>
-  <string>شیطون انتن | Sheitoon Antenna</string>
-</dict>
-</plist>`;
+        var plist = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n' +
+'<plist version="1.0">\n' +
+'<dict>\n' +
+'  <key>PayloadContent</key>\n' +
+'  <array>\n' +
+'    <dict>\n' +
+'      <key>PayloadDisplayName</key>\n' +
+'      <string>Cellular</string>\n' +
+'      <key>PayloadIdentifier</key>\n' +
+'      <string>com.apple.cellular.' + u1 + '</string>\n' +
+'      <key>PayloadType</key>\n' +
+'      <string>com.apple.cellular</string>\n' +
+'      <key>PayloadUUID</key>\n' +
+'      <string>' + u1 + '</string>\n' +
+'      <key>PayloadVersion</key>\n' +
+'      <integer>1</integer>\n' +
+'      <key>APNs</key>\n' +
+'      <array>\n' +
+'        <dict>\n' +
+'          <key>Name</key>\n' +
+'          <string>' + apn + '</string>\n' +
+'          <key>AuthenticationType</key>\n' +
+'          <string>PAP</string>\n' +
+'          <key>AllowedProtocolMask</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>AllowedProtocolMaskInRoaming</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>DefaultProtocolMask</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>EnableXLAT464</key>\n' +
+'          <true/>\n' +
+'          <key>Username</key>\n' +
+'          <string></string>\n' +
+'          <key>Password</key>\n' +
+'          <string></string>\n' +
+'          <key>ProxyServer</key>\n' +
+'          <string></string>\n' +
+'          <key>ProxyPort</key>\n' +
+'          <integer>0</integer>\n' +
+'        </dict>\n' +
+'        <dict>\n' +
+'          <key>Name</key>\n' +
+'          <string>' + apn + '</string>\n' +
+'          <key>AuthenticationType</key>\n' +
+'          <string>CHAP</string>\n' +
+'          <key>AllowedProtocolMask</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>AllowedProtocolMaskInRoaming</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>DefaultProtocolMask</key>\n' +
+'          <integer>3</integer>\n' +
+'          <key>EnableXLAT464</key>\n' +
+'          <true/>\n' +
+'          <key>Username</key>\n' +
+'          <string></string>\n' +
+'          <key>Password</key>\n' +
+'          <string></string>\n' +
+'        </dict>\n' +
+'        <dict>\n' +
+'          <key>Name</key>\n' +
+'          <string>' + apn + '</string>\n' +
+'          <key>AuthenticationType</key>\n' +
+'          <string>PAP</string>\n' +
+'          <key>AllowedProtocolMask</key>\n' +
+'          <integer>1</integer>\n' +
+'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
+'          <integer>1</integer>\n' +
+'          <key>AllowedProtocolMaskInRoaming</key>\n' +
+'          <integer>1</integer>\n' +
+'          <key>DefaultProtocolMask</key>\n' +
+'          <integer>1</integer>\n' +
+'          <key>EnableXLAT464</key>\n' +
+'          <true/>\n' +
+'          <key>Username</key>\n' +
+'          <string></string>\n' +
+'        </dict>\n' +
+'      </array>\n' +
+'      <key>AttachAPN</key>\n' +
+'      <dict>\n' +
+'        <key>Name</key>\n' +
+'        <string>' + apn + '</string>\n' +
+'        <key>AuthenticationType</key>\n' +
+'        <string>PAP</string>\n' +
+'        <key>AllowedProtocolMask</key>\n' +
+'        <integer>3</integer>\n' +
+'        <key>Username</key>\n' +
+'        <string></string>\n' +
+'        <key>Password</key>\n' +
+'        <string></string>\n' +
+'      </dict>\n' +
+'    </dict>\n' +
+'  </array>\n' +
+'  <key>PayloadDisplayName</key>\n' +
+'  <string>' + profileName + '</string>\n' +
+'  <key>PayloadIdentifier</key>\n' +
+'  <string>com.sheitoon.antenna.' + u2 + '</string>\n' +
+'  <key>PayloadRemovalDisallowed</key>\n' +
+'  <false/>\n' +
+'  <key>PayloadType</key>\n' +
+'  <string>Configuration</string>\n' +
+'  <key>PayloadUUID</key>\n' +
+'  <string>' + u3 + '</string>\n' +
+'  <key>PayloadVersion</key>\n' +
+'  <integer>1</integer>\n' +
+'  <key>PayloadDescription</key>\n' +
+'  <string>پروفایل قوی بازگردانی آنتن - شیطون انتن</string>\n' +
+'  <key>PayloadOrganization</key>\n' +
+'  <string>شیطون انتن</string>\n' +
+'</dict>\n' +
+'</plist>';
 
-        const blob = new Blob([plist], { type: 'application/x-apple-aspen-config' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        var blob = new Blob([plist], { type: 'application/x-apple-aspen-config' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
         a.href = url;
-        a.download = `sheitoon-${apn}-${Date.now()}.mobileconfig`;
+        a.download = 'sheitoon-' + apn + '-' + Date.now() + '.mobileconfig';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -529,8 +541,8 @@
         btn.classList.remove('loading');
         btn.querySelector('span').textContent = 'ساخت و دانلود پروفایل';
         msg.style.display = 'block';
-        setTimeout(() => { msg.style.display = 'none'; }, 4000);
-      }, 600);
+        setTimeout(function() { msg.style.display = 'none'; }, 3500);
+      }, 500);
     });
   </script>
 </body>
