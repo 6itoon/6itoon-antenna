@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>Cellular</string>
+      <key>PayloadIdentifier</key>
+      <string>com.apple.cellular.REPLACE_UUID_1</string>
+      <key>PayloadType</key>
+      <string>com.apple.cellular</string>
+      <key>PayloadUUID</key>
+      <string>REPLACE_UUID_1</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>APNs</key>
+      <array>
+        <dict>
+          <key>AllowedProtocolMask</key>
+          <integer>3</integer>
+          <key>AllowedProtocolMaskInDomesticRoaming</key>
+          <integer>3</integer>
+          <key>AllowedProtocolMaskInRoaming</key>
+          <integer>3</integer>
+          <key>AuthenticationType</key>
+          <string>PAP</string>
+          <key>DefaultProtocolMask</key>
+          <integer>3</integer>
+          <key>EnableXLAT464</key>
+          <true/>
+          <key>Name</key>
+          <string>mtnirancell</string>
+          <key>ProxyServer</key>
+          <string></string>
+          <key>Username</key>
+          <string></string>
+        </dict>
+        <dict>
+          <key>AllowedProtocolMask</key>
+          <integer>1</integer>
+          <key>AllowedProtocolMaskInDomesticRoaming</key>
+          <integer>1</integer>
+          <key>AllowedProtocolMaskInRoaming</key>
+          <integer>1</integer>
+          <key>AuthenticationType</key>
+          <string>CHAP</string>
+          <key>DefaultProtocolMask</key>
+          <integer>1</integer>
+          <key>EnableXLAT464</key>
+          <true/>
+          <key>Name</key>
+          <string>mtnirancell</string>
+          <key>Username</key>
+          <string></string>
+        </dict>
+      </array>
+      <key>AttachAPN</key>
+      <dict>
+        <key>AllowedProtocolMask</key>
+        <integer>3</integer>
+        <key>AuthenticationType</key>
+        <string>PAP</string>
+        <key>Name</key>
+        <string>mtnirancell</string>
+        <key>Username</key>
+        <string></string>
+      </dict>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>شیطون انتن - ایرانسل</string>
+  <key>PayloadIdentifier</key>
+  <string>com.sheitoon.antenna.REPLACE_UUID_2</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>REPLACE_UUID_3</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadDescription</key>
+  <string>پروفایل بازگردانی آنتن - شیطون انتن</string>
+  <key>PayloadOrganization</key>
+  <string>شیطون انتن | Sheitoon Antenna</string>
+</dict>
+</plist>
