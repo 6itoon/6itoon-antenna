@@ -330,6 +330,7 @@
               <option value="ApTel">آپتل (ApTel)</option>
               <option value="samantel">سامانتل</option>
               <option value="shatelmobile">شاتل موبایل</option>
+              <option value="dual">دوتایی: همراه اول + ایرانسل</option>
             </select>
             <span class="select-arrow">▼</span>
           </div>
@@ -410,7 +411,43 @@
       btn.querySelector('span').textContent = 'در حال ساخت...';
 
       setTimeout(function() {
-        var u1 = uuid(), u2 = uuid(), u3 = uuid();
+        var u1 = uuid(), u2 = uuid(), u3 = uuid(), u4 = uuid(), u5 = uuid();
+        var isDual = (apn === 'dual');
+        var apnList = isDual ? ['mcinet', 'mtnirancell'] : [apn];
+        var fileName = isDual ? 'sheitoon-dual-' + Date.now() : 'sheitoon-' + apn + '-' + Date.now();
+
+        function makeApnDict(name, auth, mask) {
+          return '        <dict>\n' +
+'          <key>Name</key>\n' +
+'          <string>' + name + '</string>\n' +
+'          <key>AuthenticationType</key>\n' +
+'          <string>' + auth + '</string>\n' +
+'          <key>AllowedProtocolMask</key>\n' +
+'          <integer>' + mask + '</integer>\n' +
+'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
+'          <integer>' + mask + '</integer>\n' +
+'          <key>AllowedProtocolMaskInRoaming</key>\n' +
+'          <integer>' + mask + '</integer>\n' +
+'          <key>DefaultProtocolMask</key>\n' +
+'          <integer>' + mask + '</integer>\n' +
+'          <key>EnableXLAT464</key>\n' +
+'          <true/>\n' +
+'          <key>Username</key>\n' +
+'          <string></string>\n' +
+'          <key>Password</key>\n' +
+'          <string></string>\n' +
+'        </dict>\n';
+        }
+
+        var apnsXml = '';
+        apnList.forEach(function(n) {
+          apnsXml += makeApnDict(n, 'PAP', 3);
+          apnsXml += makeApnDict(n, 'CHAP', 3);
+          apnsXml += makeApnDict(n, 'PAP', 1);
+        });
+
+        var attachName = isDual ? 'mcinet' : apn;
+        var displayName = isDual ? (nameInput || 'شیطون انتن - دوتایی') : profileName;
 
         var plist = '<?xml version="1.0" encoding="UTF-8"?>\n' +
 '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n' +
@@ -431,73 +468,12 @@
 '      <integer>1</integer>\n' +
 '      <key>APNs</key>\n' +
 '      <array>\n' +
-'        <dict>\n' +
-'          <key>Name</key>\n' +
-'          <string>' + apn + '</string>\n' +
-'          <key>AuthenticationType</key>\n' +
-'          <string>PAP</string>\n' +
-'          <key>AllowedProtocolMask</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>AllowedProtocolMaskInRoaming</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>DefaultProtocolMask</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>EnableXLAT464</key>\n' +
-'          <true/>\n' +
-'          <key>Username</key>\n' +
-'          <string></string>\n' +
-'          <key>Password</key>\n' +
-'          <string></string>\n' +
-'          <key>ProxyServer</key>\n' +
-'          <string></string>\n' +
-'          <key>ProxyPort</key>\n' +
-'          <integer>0</integer>\n' +
-'        </dict>\n' +
-'        <dict>\n' +
-'          <key>Name</key>\n' +
-'          <string>' + apn + '</string>\n' +
-'          <key>AuthenticationType</key>\n' +
-'          <string>CHAP</string>\n' +
-'          <key>AllowedProtocolMask</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>AllowedProtocolMaskInRoaming</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>DefaultProtocolMask</key>\n' +
-'          <integer>3</integer>\n' +
-'          <key>EnableXLAT464</key>\n' +
-'          <true/>\n' +
-'          <key>Username</key>\n' +
-'          <string></string>\n' +
-'          <key>Password</key>\n' +
-'          <string></string>\n' +
-'        </dict>\n' +
-'        <dict>\n' +
-'          <key>Name</key>\n' +
-'          <string>' + apn + '</string>\n' +
-'          <key>AuthenticationType</key>\n' +
-'          <string>PAP</string>\n' +
-'          <key>AllowedProtocolMask</key>\n' +
-'          <integer>1</integer>\n' +
-'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
-'          <integer>1</integer>\n' +
-'          <key>AllowedProtocolMaskInRoaming</key>\n' +
-'          <integer>1</integer>\n' +
-'          <key>DefaultProtocolMask</key>\n' +
-'          <integer>1</integer>\n' +
-'          <key>EnableXLAT464</key>\n' +
-'          <true/>\n' +
-'          <key>Username</key>\n' +
-'          <string></string>\n' +
-'        </dict>\n' +
+apnsXml +
 '      </array>\n' +
 '      <key>AttachAPN</key>\n' +
 '      <dict>\n' +
 '        <key>Name</key>\n' +
-'        <string>' + apn + '</string>\n' +
+'        <string>' + attachName + '</string>\n' +
 '        <key>AuthenticationType</key>\n' +
 '        <string>PAP</string>\n' +
 '        <key>AllowedProtocolMask</key>\n' +
@@ -510,7 +486,7 @@
 '    </dict>\n' +
 '  </array>\n' +
 '  <key>PayloadDisplayName</key>\n' +
-'  <string>' + profileName + '</string>\n' +
+'  <string>' + displayName + '</string>\n' +
 '  <key>PayloadIdentifier</key>\n' +
 '  <string>com.sheitoon.antenna.' + u2 + '</string>\n' +
 '  <key>PayloadRemovalDisallowed</key>\n' +
@@ -532,7 +508,7 @@
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'sheitoon-' + apn + '-' + Date.now() + '.mobileconfig';
+        a.download = fileName + '.mobileconfig';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
