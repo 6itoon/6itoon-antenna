@@ -9,7 +9,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="icon" href="logo.jpg" type="image/jpeg">
   <link rel="apple-touch-icon" href="logo.jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
   <style>
     :root {
       --bg: #07040f;
@@ -302,6 +303,56 @@
       0%, 100% { box-shadow: 0 0 0 6px rgba(239,68,68,0.08), 0 0 36px var(--red-glow); }
       50% { box-shadow: 0 0 0 8px rgba(239,68,68,0.12), 0 0 48px rgba(239,68,68,0.55); }
     }
+
+    /* ---- افزوده‌ها ---- */
+    .lang-btn {
+      position: absolute; top: 14px; inset-inline-end: 18px;
+      background: rgba(255,255,255,0.06); color: var(--muted);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 6px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    }
+    .lang-btn:hover { color: var(--text); }
+    html[dir="ltr"] .select-arrow { left: auto; right: 14px; }
+    html[dir="ltr"] select { padding-left: 16px; padding-right: 38px; }
+    input[type="password"] {
+      width: 100%; background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 13px 16px; color: var(--text); font-size: 0.98rem;
+      font-weight: 500; outline: none; -webkit-appearance: none; appearance: none;
+    }
+    input[type="password"]:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
+    .dim { opacity: .55; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .custom-fields[hidden], .error[hidden], .btn-ghost[hidden] { display: none; }
+    .custom-fields { border: 1px dashed rgba(239,68,68,0.3); border-radius: 16px; padding: 14px 14px 2px; margin-bottom: 16px; }
+    .hint { color: var(--muted); font-size: 0.76rem; line-height: 1.6; margin: 4px 0 12px; }
+    .error {
+      background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); color: #fca5a5;
+      border-radius: 14px; padding: 10px 12px; font-size: 0.86rem; margin-bottom: 12px;
+    }
+    .panel {
+      margin-top: 16px; border: 1px solid var(--border); border-radius: 16px;
+      background: rgba(255,255,255,0.03); padding: 4px 14px 12px;
+    }
+    .card .panel { margin-top: 18px; }
+    .container > .panel { margin-top: 20px; padding-top: 0; }
+    .panel > summary, .raw > summary {
+      cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #fca5a5; padding: 12px 0; list-style-position: inside;
+    }
+    .raw > summary { font-size: 0.8rem; color: var(--muted); padding: 8px 0; }
+    .preview-table { overflow-x: auto; direction: ltr; }
+    .preview-table table { width: 100%; border-collapse: collapse; font-size: 0.78rem; direction: ltr; }
+    .preview-table th, .preview-table td { padding: 6px 6px; border-bottom: 1px solid var(--border); text-align: left; word-break: break-all; }
+    .preview-table th { color: var(--muted); font-weight: 500; }
+    .preview-table .meta { color: var(--muted); font-size: 0.74rem; padding: 8px 0 0; direction: ltr; text-align: left; }
+    #previewRaw {
+      background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; font-size: 0.68rem;
+      line-height: 1.5; overflow-x: auto; max-height: 260px; color: #cbd5e1; font-family: ui-monospace, Menlo, monospace;
+    }
+    .help-steps { margin: 12px 0 8px; padding-inline-start: 20px; color: var(--muted); font-size: 0.84rem; line-height: 1.7; }
+    .btn-ghost {
+      width: 100%; background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 14px; padding: 11px; font-weight: 600; font-size: 0.9rem; cursor: pointer; margin: 4px 0 8px;
+    }
   </style>
 </head>
 <body>
@@ -310,216 +361,483 @@
   <div class="bg-glow g3"></div>
 
   <div class="container">
+    <button type="button" class="lang-btn" id="langBtn" aria-label="Language">EN</button>
+
     <header class="header">
       <div class="logo-wrap">
         <img src="logo.jpg" alt="شیطون انتن" width="112" height="112">
       </div>
-      <h1>شیطون انتن</h1>
-      <p>ساخت پروفایل قوی آنتن با UUID یکتا</p>
+      <h1 data-i18n="title">شیطون انتن</h1>
+      <p data-i18n="subtitle">ساخت پروفایل قوی آنتن با UUID یکتا</p>
     </header>
 
     <div class="card">
-      <form id="config-form" autocomplete="off">
+      <form id="config-form" autocomplete="off" novalidate>
         <div class="form-group">
-          <label class="form-label" for="apn">انتخاب اپراتور</label>
+          <label class="form-label" for="apn" data-i18n="lbl_operator">انتخاب اپراتور</label>
           <div class="select-wrap">
-            <select id="apn" required>
-              <option value="mcinet">همراه اول (MCI)</option>
-              <option value="mtnirancell">ایرانسل (Irancell)</option>
-              <option value="RighTel">رایتل (RighTel)</option>
-              <option value="ApTel">آپتل (ApTel)</option>
-              <option value="samantel">سامانتل</option>
-              <option value="shatelmobile">شاتل موبایل</option>
-              <option value="dual">دوتایی: همراه اول + ایرانسل</option>
+            <select id="apn">
+              <option value="mci"></option>
+              <option value="irancell"></option>
+              <option value="rightel"></option>
+              <option value="aptel"></option>
+              <option value="samantel"></option>
+              <option value="shatel"></option>
+              <option value="dual"></option>
+              <option value="custom"></option>
+            </select>
+            <span class="select-arrow">▼</span>
+          </div>
+        </div>
+
+        <div id="customFields" class="custom-fields" hidden>
+          <div class="form-group">
+            <label class="form-label" for="customApn" data-i18n="lbl_custom_apn">نام APN</label>
+            <input type="text" id="customApn" maxlength="100" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="internet">
+          </div>
+          <div class="row2">
+            <div class="form-group">
+              <label class="form-label" for="customUser" data-i18n="lbl_user">نام کاربری (اختیاری)</label>
+              <input type="text" id="customUser" maxlength="100" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customPass" data-i18n="lbl_pass">رمز (اختیاری)</label>
+              <input type="password" id="customPass" maxlength="100" dir="ltr" autocomplete="new-password">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="form-group">
+              <label class="form-label" for="customProxy" data-i18n="lbl_proxy">پروکسی (اختیاری)</label>
+              <input type="text" id="customProxy" maxlength="100" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="host">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customPort" data-i18n="lbl_port">پورت</label>
+              <input type="text" id="customPort" maxlength="5" inputmode="numeric" dir="ltr" placeholder="8080">
+            </div>
+          </div>
+          <p class="hint" data-i18n="custom_hint">فقط اگر اپراتورت در لیست نیست یا APN اختصاصی داری. اطلاعات فقط روی گوشی خودت ساخته می‌شود و جایی ارسال نمی‌شود.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="variant"><span data-i18n="lbl_variant">نسخه پروفایل</span> <span class="dim" data-i18n="lbl_variant_hint">(اگر نسخه A جواب نداد، بقیه را امتحان کن)</span></label>
+          <div class="select-wrap">
+            <select id="variant">
+              <option value="A"></option>
+              <option value="B"></option>
+              <option value="C"></option>
+              <option value="D"></option>
             </select>
             <span class="select-arrow">▼</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="profileName">نام پروفایل <span style="opacity:.55">(اختیاری)</span></label>
+          <label class="form-label" for="profileName"><span data-i18n="lbl_name">نام پروفایل</span> <span class="dim" data-i18n="lbl_optional">(اختیاری)</span></label>
           <div class="input-wrap">
-            <input type="text" id="profileName" placeholder="مثلاً: شیطون - همراه اول" maxlength="40">
+            <input type="text" id="profileName" data-i18n-ph="ph_name" placeholder="مثلاً: شیطون - همراه اول" maxlength="40">
           </div>
         </div>
 
+        <div class="error" id="errorMsg" role="alert" hidden></div>
+
         <button type="submit" class="btn" id="submitBtn">
-          <span>ساخت و دانلود پروفایل</span>
+          <span data-i18n="btn_make">ساخت و دانلود پروفایل</span>
         </button>
       </form>
 
-      <div class="success" id="successMsg">پروفایل با موفقیت دانلود شد</div>
+      <div class="success" id="successMsg" data-i18n="msg_ok">پروفایل با موفقیت دانلود شد</div>
+
+      <details class="panel" id="previewBox">
+        <summary data-i18n="preview_title">پیش‌نمایش محتوای پروفایل</summary>
+        <p class="hint" data-i18n="preview_hint">این پروفایل فقط تنظیمات APN سلولار را عوض می‌کند. چیز دیگری (VPN، گواهی، پروکسی سیستم) نصب نمی‌کند.</p>
+        <div id="previewTable" class="preview-table"></div>
+        <details class="raw">
+          <summary data-i18n="preview_raw">نمایش فایل خام</summary>
+          <pre id="previewRaw" dir="ltr"></pre>
+        </details>
+      </details>
     </div>
+
+    <details class="panel" id="helpBox">
+      <summary data-i18n="help_title">آنتن نیامد؟ عیب‌یابی</summary>
+      <label class="form-label" for="symptom" data-i18n="help_lbl">مشکل شما چیست؟</label>
+      <div class="select-wrap">
+        <select id="symptom"></select>
+        <span class="select-arrow">▼</span>
+      </div>
+      <ol id="helpSteps" class="help-steps"></ol>
+      <button type="button" class="btn-ghost" id="helpApply" hidden></button>
+      <p class="hint" data-i18n="help_disclaimer">این پیشنهادها تجربی‌اند و تضمینی نیستند؛ نتیجه‌ات را در GitHub گزارش بده.</p>
+    </details>
 
     <div class="steps">
-      <div class="steps-title">مراحل نصب سریع</div>
-      <div class="step">
-        <div class="step-num">۱</div>
-        <div class="step-text">ریست شبکه انجام بده</div>
-      </div>
-      <div class="step">
-        <div class="step-num">۲</div>
-        <div class="step-text">فایل را در Files ذخیره کن</div>
-      </div>
-      <div class="step">
-        <div class="step-num">۳</div>
-        <div class="step-text">Settings → Profile Downloaded → Install</div>
-      </div>
-      <div class="step">
-        <div class="step-num">۴</div>
-        <div class="step-text">Data Roaming و VoLTE را روشن کن</div>
-      </div>
-      <div class="step">
-        <div class="step-num">۵</div>
-        <div class="step-text">حالت هواپیما را یک‌بار روشن و خاموش کن</div>
-      </div>
-    </div>
-
-    <div class="ops">
-      <span class="op">همراه اول</span>
-      <span class="op">ایرانسل</span>
-      <span class="op">رایتل</span>
-      <span class="op">آپتل</span>
-      <span class="op">سامانتل</span>
-      <span class="op">شاتل</span>
+      <div class="steps-title" data-i18n="steps_title">مراحل نصب سریع</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text" data-i18n="s1">ریست شبکه انجام بده</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text" data-i18n="s2">فایل را در Files ذخیره کن</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text" data-i18n="s3">Settings → Profile Downloaded → Install</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text" data-i18n="s4">Data Roaming و VoLTE را روشن کن</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text" data-i18n="s5">حالت هواپیما را یک‌بار روشن و خاموش کن</div></div>
     </div>
 
     <footer class="footer">
-      <a href="https://github.com/6itoon/6itoon-antenna" target="_blank" rel="noopener">گیت‌هاب پروژه</a>
-      <p>قبل از نصب پروفایل جدید، پروفایل قبلی را حذف کن</p>
+      <a href="https://github.com/6itoon/6itoon-antenna/issues/new?template=test-report.yml" target="_blank" rel="noopener" data-i18n="f_report">گزارش نتیجه تست (کدام نسخه جواب داد؟)</a><br>
+      <a href="https://github.com/6itoon/6itoon-antenna" target="_blank" rel="noopener" data-i18n="f_github">گیت‌هاب پروژه</a>
+      <p data-i18n="f_note">نصب هر پروفایل شیطون انتن، پروفایل قبلی را جایگزین می‌کند.</p>
     </footer>
   </div>
 
   <script>
+    // این تعریف باید با scripts/generate_profile.py یکی باشد (tests/test_profiles.py بررسی می‌کند)
+    var OPERATORS = {
+      mci:      { name: 'همراه اول (MCI)',   apns: ['mcinet'] },
+      irancell: { name: 'ایرانسل (Irancell)', apns: ['mtnirancell'] },
+      rightel:  { name: 'رایتل (RighTel)',    apns: ['RighTel'] },
+      aptel:    { name: 'آپتل (ApTel)',       apns: ['ApTel'] },
+      samantel: { name: 'سامانتل',            apns: ['samantel'] },
+      shatel:   { name: 'شاتل موبایل',        apns: ['shatelmobile'] },
+      dual:     { name: 'دوتایی: همراه اول + ایرانسل', apns: ['mcinet', 'mtnirancell'] }
+    };
+    var CUSTOM_NAME = 'APN دلخواه';
+    var MAX_LEN = 100;
+    var ID_PREFIX = 'com.sheitoon.antenna';
+    var VARIANTS = {
+      A: { auths: ['PAP', 'CHAP'], proto: 3, xlat: true },
+      B: { auths: ['PAP'],         proto: 3, xlat: true },
+      C: { auths: ['PAP', 'CHAP'], proto: 1, xlat: false },
+      D: { auths: ['PAP', 'CHAP'], proto: 3, xlat: false }
+    };
+
+    // ---------- متن‌ها (فارسی / English) ----------
+    var I18N = {
+      fa: {
+        title: 'شیطون انتن', subtitle: 'ساخت پروفایل قوی آنتن با UUID یکتا',
+        lbl_operator: 'انتخاب اپراتور', lbl_variant: 'نسخه پروفایل', lbl_variant_hint: '(اگر نسخه A جواب نداد، بقیه را امتحان کن)',
+        lbl_name: 'نام پروفایل', lbl_optional: '(اختیاری)', ph_name: 'مثلاً: شیطون - همراه اول',
+        lbl_custom_apn: 'نام APN', lbl_user: 'نام کاربری (اختیاری)', lbl_pass: 'رمز (اختیاری)', lbl_proxy: 'پروکسی (اختیاری)', lbl_port: 'پورت',
+        custom_hint: 'فقط اگر اپراتورت در لیست نیست یا APN اختصاصی داری. اطلاعات فقط روی گوشی خودت ساخته می‌شود و جایی ارسال نمی‌شود.',
+        btn_make: 'ساخت و دانلود پروفایل', btn_busy: 'در حال ساخت...', msg_ok: 'پروفایل با موفقیت دانلود شد',
+        preview_title: 'پیش‌نمایش محتوای پروفایل', preview_raw: 'نمایش فایل خام',
+        preview_hint: 'این پروفایل فقط تنظیمات APN سلولار را عوض می‌کند. چیز دیگری (VPN، گواهی، پروکسی سیستم) نصب نمی‌کند.',
+        pv_id: 'شناسه ثابت (نصب مجدد = جایگزینی)', pv_uuid: 'UUID هر بار جدید ساخته می‌شود',
+        help_title: 'آنتن نیامد؟ عیب‌یابی', help_lbl: 'مشکل شما چیست؟', help_pick: '— انتخاب کن —',
+        help_disclaimer: 'این پیشنهادها تجربی‌اند و تضمینی نیستند؛ نتیجه‌ات را در GitHub گزارش بده.',
+        help_apply: 'انتخاب نسخه {v} در فرم',
+        steps_title: 'مراحل نصب سریع', s1: 'ریست شبکه انجام بده', s2: 'فایل را در Files ذخیره کن',
+        s3: 'Settings → Profile Downloaded → Install', s4: 'Data Roaming و VoLTE را روشن کن', s5: 'حالت هواپیما را یک‌بار روشن و خاموش کن',
+        f_report: 'گزارش نتیجه تست (کدام نسخه جواب داد؟)', f_github: 'گیت‌هاب پروژه', f_note: 'نصب هر پروفایل شیطون انتن، پروفایل قبلی را جایگزین می‌کند.',
+        op_mci: 'همراه اول (MCI)', op_irancell: 'ایرانسل (Irancell)', op_rightel: 'رایتل (RighTel)', op_aptel: 'آپتل (ApTel)',
+        op_samantel: 'سامانتل', op_shatel: 'شاتل موبایل', op_dual: 'دوتایی: همراه اول + ایرانسل', op_custom: 'APN دلخواه (پیشرفته)',
+        var_A: 'A - استاندارد (پیشنهادی)', var_B: 'B - فقط PAP', var_C: 'C - فقط IPv4 (بدون XLAT464)', var_D: 'D - بدون XLAT464',
+        err_apn: 'نام APN الزامی است', err_len: 'هر فیلد حداکثر ۱۰۰ کاراکتر', err_chars: 'کاراکتر نامعتبر در یکی از فیلدها',
+        err_port: 'پورت باید عددی بین ۱ تا ۶۵۵۳۵ باشد', err_port_host: 'پورت بدون آدرس پروکسی معنی ندارد',
+        h_none_t: 'آنتن اصلاً نمی‌آید (No Service)', h_none_v: 'B',
+        h_none_s: ['Reset Network Settings بده', 'پروفایل‌های قبلی شیطون انتن را از General → VPN & Device Management حذف کن', 'فقط یک سیم‌کارت فعال باشد', 'نسخه A را نصب کن، Data Roaming و VoLTE را روشن کن، Airplane Mode را یک‌بار بزن و ریستارت کن', 'اگر نیامد، دوباره ریست شبکه بده و نسخه B را امتحان کن'],
+        h_sos_t: 'فقط SOS Only می‌بینم', h_sos_v: 'B',
+        h_sos_s: ['گوشی را کامل خاموش و روشن کن', 'ریست شبکه بده و پروفایل قبلی را حذف کن', 'روی همراه اول امتحان کن (معمولاً نتیجه بهتری دارد)', 'نسخه A و بعد B را امتحان کن'],
+        h_lost_t: 'آنتن آمد ولی بعد از ریستارت رفت', h_lost_v: 'D',
+        h_lost_s: ['مطمئن شو فقط یک پروفایل شیطون انتن نصب است', 'بعد از ریستارت Data Roaming و VoLTE را چک کن', 'پروفایل را دوباره نصب کن (جایگزین قبلی می‌شود)', 'نسخه D را امتحان کن'],
+        h_nonet_t: 'آنتن هست ولی اینترنت ندارم', h_nonet_v: 'C',
+        h_nonet_s: ['Data Roaming را چک کن', 'Cellular Data Options را روی 5G/LTE بگذار', 'ممکن است شبکه با IPv6/XLAT464 مشکل داشته باشد؛ نسخه C (فقط IPv4) را امتحان کن', 'اگر APN اپراتور شما متفاوت است از «APN دلخواه» استفاده کن'],
+        h_flap_t: 'آنتن مدام می‌رود و می‌آید', h_flap_v: 'B',
+        h_flap_s: ['فقط یک سیم‌کارت فعال باشد', 'Wi‑Fi Calling را موقتاً خاموش کن', 'نسخه B را امتحان کن', 'اگر در یک نقطه خاص قطع می‌شود، ممکن است مشکل پوشش شبکه باشد نه پروفایل'],
+        h_inst_t: 'پروفایل نصب نمی‌شود', h_inst_v: '',
+        h_inst_s: ['فایل را حتماً با Safari دانلود کن', 'بعد از دانلود: Settings → Profile Downloaded', 'اگر نیامد، فایل را از Files باز کن', 'رمز گوشی را فعال نگه دار (بدون رمز نصب نمی‌شود)']
+      },
+      en: {
+        title: 'Sheitoon Antenna', subtitle: 'Build a cellular profile with a fresh UUID each time',
+        lbl_operator: 'Carrier', lbl_variant: 'Profile variant', lbl_variant_hint: "(if A doesn't work, try the others)",
+        lbl_name: 'Profile name', lbl_optional: '(optional)', ph_name: 'e.g. Sheitoon - MCI',
+        lbl_custom_apn: 'APN name', lbl_user: 'Username (optional)', lbl_pass: 'Password (optional)', lbl_proxy: 'Proxy (optional)', lbl_port: 'Port',
+        custom_hint: "Only if your carrier isn't listed or you have a specific APN. Everything is built on your device and never sent anywhere.",
+        btn_make: 'Build & download profile', btn_busy: 'Building...', msg_ok: 'Profile downloaded',
+        preview_title: 'Preview profile contents', preview_raw: 'Show raw file',
+        preview_hint: "This profile only changes cellular APN settings. It does not install a VPN, certificate or system proxy.",
+        pv_id: 'Fixed identifier (reinstall = replace)', pv_uuid: 'UUIDs are regenerated every time',
+        help_title: 'No signal? Troubleshooting', help_lbl: "What's the problem?", help_pick: '— choose —',
+        help_disclaimer: 'These suggestions are experimental, not guarantees. Please report your result on GitHub.',
+        help_apply: 'Select variant {v} in the form',
+        steps_title: 'Quick install', s1: 'Reset network settings', s2: 'Save the file to Files',
+        s3: 'Settings → Profile Downloaded → Install', s4: 'Turn on Data Roaming and VoLTE', s5: 'Toggle Airplane Mode on and off once',
+        f_report: 'Report a test result (which variant worked?)', f_github: 'Project on GitHub', f_note: 'Installing any Sheitoon profile replaces the previous one.',
+        op_mci: 'MCI (Hamrah-e Aval)', op_irancell: 'Irancell', op_rightel: 'RighTel', op_aptel: 'ApTel',
+        op_samantel: 'Samantel', op_shatel: 'Shatel Mobile', op_dual: 'Dual: MCI + Irancell', op_custom: 'Custom APN (advanced)',
+        var_A: 'A - Standard (recommended)', var_B: 'B - PAP only', var_C: 'C - IPv4 only (no XLAT464)', var_D: 'D - No XLAT464',
+        err_apn: 'APN name is required', err_len: 'Each field is limited to 100 characters', err_chars: 'A field contains an invalid character',
+        err_port: 'Port must be a number from 1 to 65535', err_port_host: 'A port needs a proxy host',
+        h_none_t: 'No signal at all (No Service)', h_none_v: 'B',
+        h_none_s: ['Reset Network Settings', 'Remove old Sheitoon profiles in General → VPN & Device Management', 'Keep only one SIM active', 'Install variant A, enable Data Roaming and VoLTE, toggle Airplane Mode once, restart', "If still nothing, reset network settings again and try variant B"],
+        h_sos_t: 'I only see SOS Only', h_sos_v: 'B',
+        h_sos_s: ['Fully power the phone off and on', 'Reset network settings and remove the old profile', 'Try MCI first (usually the best results)', 'Try variant A, then B'],
+        h_lost_t: 'Signal came back, then vanished after restart', h_lost_v: 'D',
+        h_lost_s: ['Make sure only one Sheitoon profile is installed', 'After restart, re-check Data Roaming and VoLTE', 'Reinstall the profile (it replaces the old one)', 'Try variant D'],
+        h_nonet_t: 'I have signal but no internet', h_nonet_v: 'C',
+        h_nonet_s: ['Check Data Roaming', 'Set Cellular Data Options to 5G/LTE', 'The network may not like IPv6/XLAT464; try variant C (IPv4 only)', "If your carrier's APN is different, use Custom APN"],
+        h_flap_t: 'Signal keeps dropping and returning', h_flap_v: 'B',
+        h_flap_s: ['Keep only one SIM active', 'Temporarily turn off Wi-Fi Calling', 'Try variant B', 'If it drops at one specific place it may be coverage, not the profile'],
+        h_inst_t: "The profile won't install", h_inst_v: '',
+        h_inst_s: ['Download the file with Safari', 'After download: Settings → Profile Downloaded', "If it doesn't appear, open the file from Files", 'Keep a passcode enabled (profiles cannot be installed without one)']
+      }
+    };
+    var HELP_IDS = ['none', 'sos', 'lost', 'nonet', 'flap', 'inst'];
+    var lang = 'fa';
+
+    function t(k) { var d = I18N[lang]; if (d && k in d) return d[k]; if (k in I18N.fa) return I18N.fa[k]; return k; }
+    function $(id) { return document.getElementById(id); }
+    function store(k, v) { try { localStorage.setItem('sheitoon_' + k, v); } catch (e) {} }
+    function load(k) { try { return localStorage.getItem('sheitoon_' + k); } catch (e) { return null; } }
+
+    // ---------- ساخت پروفایل ----------
     function uuid() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0;
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID().toUpperCase();
+      var b = new Uint8Array(16);
+      crypto.getRandomValues(b);
+      b[6] = (b[6] & 0x0f) | 0x40;
+      b[8] = (b[8] & 0x3f) | 0x80;
+      var h = Array.prototype.map.call(b, function(x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      return (h.slice(0,8) + '-' + h.slice(8,12) + '-' + h.slice(12,16) + '-' + h.slice(16,20) + '-' + h.slice(20)).toUpperCase();
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ارقام فارسی/عربی را لاتین می‌کند (کاربر ایرانی ممکن است پورت را با کیبورد فارسی بزند)
+    function toLatinDigits(s) {
+      return s.replace(/[\u06f0-\u06f9]/g, function(d) { return d.charCodeAt(0) - 0x06f0; })
+              .replace(/[\u0660-\u0669]/g, function(d) { return d.charCodeAt(0) - 0x0660; });
+    }
+
+    // خطا را به صورت کلید متن برمی‌گرداند (یا '' اگر معتبر است) و مقدار تمیزشده را در out.value می‌گذارد
+    function validateCustom(raw) {
+      var c = {
+        apn: (raw.apn || '').trim(), username: (raw.username || '').trim(),
+        password: raw.password || '', proxy_host: (raw.proxy_host || '').trim()
+      };
+      var port = toLatinDigits(String(raw.proxy_port == null ? '' : raw.proxy_port).trim());
+      if (!c.apn) return { err: 'err_apn' };
+      var keys = Object.keys(c);
+      for (var i = 0; i < keys.length; i++) {
+        var v = c[keys[i]];
+        if (v.length > MAX_LEN) return { err: 'err_len' };
+        if (/[\u0000-\u001f]/.test(v)) return { err: 'err_chars' };
+      }
+      if (port) {
+        if (!/^[0-9]+$/.test(port) || +port < 1 || +port > 65535) return { err: 'err_port' };
+        if (!c.proxy_host) return { err: 'err_port_host' };
+      }
+      c.proxy_port = port ? parseInt(port, 10) : null;
+      return { value: c };
+    }
+
+    function apnDict(name, auth, v, cred) {
+      var m = v.proto;
+      cred = cred || {};
+      return '        <dict>\n' +
+'          <key>Name</key>\n          <string>' + esc(name) + '</string>\n' +
+'          <key>AuthenticationType</key>\n          <string>' + auth + '</string>\n' +
+'          <key>Username</key>\n          <string>' + esc(cred.username || '') + '</string>\n' +
+'          <key>Password</key>\n          <string>' + esc(cred.password || '') + '</string>\n' +
+'          <key>AllowedProtocolMask</key>\n          <integer>' + m + '</integer>\n' +
+'          <key>AllowedProtocolMaskInRoaming</key>\n          <integer>' + m + '</integer>\n' +
+'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n          <integer>' + m + '</integer>\n' +
+'          <key>DefaultProtocolMask</key>\n          <integer>' + m + '</integer>\n' +
+(v.xlat ? '          <key>EnableXLAT464</key>\n          <true/>\n' : '') +
+(cred.proxy_host ? '          <key>ProxyServer</key>\n          <string>' + esc(cred.proxy_host) + '</string>\n' : '') +
+(cred.proxy_host && cred.proxy_port ? '          <key>ProxyPort</key>\n          <integer>' + cred.proxy_port + '</integer>\n' : '') +
+'        </dict>\n';
+    }
+
+    // custom فقط وقتی key === 'custom' لازم است (قبلاً با validateCustom تمیز شده)
+    function buildProfile(key, nameInput, variant, custom) {
+      var cred = null, op;
+      if (key === 'custom') { cred = custom; op = { name: CUSTOM_NAME, apns: [cred.apn] }; }
+      else { op = OPERATORS[key]; }
+      var v = VARIANTS[variant];
+      var displayName = (nameInput || '').trim() || ('شیطون انتن - ' + op.name + (variant === 'A' ? '' : ' (' + variant + ')'));
+      var apnsXml = '';
+      op.apns.forEach(function(n) {
+        v.auths.forEach(function(a) { apnsXml += apnDict(n, a, v, cred); });
+      });
+      return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n' +
+'<plist version="1.0">\n<dict>\n' +
+'  <key>PayloadContent</key>\n  <array>\n    <dict>\n' +
+'      <key>PayloadType</key>\n      <string>com.apple.cellular</string>\n' +
+'      <key>PayloadDisplayName</key>\n      <string>Cellular</string>\n' +
+'      <key>PayloadIdentifier</key>\n      <string>' + ID_PREFIX + '.cellular</string>\n' +
+'      <key>PayloadUUID</key>\n      <string>' + uuid() + '</string>\n' +
+'      <key>PayloadVersion</key>\n      <integer>1</integer>\n' +
+'      <key>APNs</key>\n      <array>\n' + apnsXml + '      </array>\n' +
+'      <key>AttachAPN</key>\n      <dict>\n' +
+'        <key>Name</key>\n        <string>' + esc(op.apns[0]) + '</string>\n' +
+'        <key>AuthenticationType</key>\n        <string>' + v.auths[0] + '</string>\n' +
+'        <key>Username</key>\n        <string>' + esc((cred || {}).username || '') + '</string>\n' +
+'        <key>Password</key>\n        <string>' + esc((cred || {}).password || '') + '</string>\n' +
+'        <key>AllowedProtocolMask</key>\n        <integer>' + v.proto + '</integer>\n' +
+'      </dict>\n    </dict>\n  </array>\n' +
+'  <key>PayloadType</key>\n  <string>Configuration</string>\n' +
+'  <key>PayloadDisplayName</key>\n  <string>' + esc(displayName) + '</string>\n' +
+'  <key>PayloadDescription</key>\n  <string>پروفایل بازگردانی آنتن - شیطون انتن - نسخه ' + variant + '</string>\n' +
+'  <key>PayloadOrganization</key>\n  <string>شیطون انتن | Sheitoon Antenna</string>\n' +
+'  <key>PayloadIdentifier</key>\n  <string>' + ID_PREFIX + '</string>\n' +
+'  <key>PayloadUUID</key>\n  <string>' + uuid() + '</string>\n' +
+'  <key>PayloadVersion</key>\n  <integer>1</integer>\n' +
+'  <key>PayloadRemovalDisallowed</key>\n  <false/>\n' +
+'</dict>\n</plist>\n';
+    }
+
+    // ---------- فرم ----------
+    function readCustom() {
+      return validateCustom({
+        apn: $('customApn').value, username: $('customUser').value, password: $('customPass').value,
+        proxy_host: $('customProxy').value, proxy_port: $('customPort').value
       });
     }
 
-    document.getElementById('config-form').addEventListener('submit', function(e) {
+    // نتیجه: { xml } یا { err }
+    function currentProfile() {
+      var key = $('apn').value, variant = $('variant').value, custom = null;
+      if (key === 'custom') {
+        var r = readCustom();
+        if (r.err) return { err: r.err };
+        custom = r.value;
+      }
+      return { xml: buildProfile(key, $('profileName').value, variant, custom), key: key, variant: variant, custom: custom };
+    }
+
+    function showError(k) {
+      var e = $('errorMsg');
+      if (k) { e.textContent = t(k); e.hidden = false; } else { e.hidden = true; e.textContent = ''; }
+    }
+
+    function td(text) { var c = document.createElement('td'); c.textContent = text; return c; }
+    function th(text) { var c = document.createElement('th'); c.textContent = text; return c; }
+
+    function updatePreview() {
+      var box = $('previewTable'), raw = $('previewRaw');
+      box.textContent = '';
+      var p = currentProfile();
+      if (p.err) { raw.textContent = ''; var m = document.createElement('p'); m.className = 'hint'; m.textContent = t(p.err); box.appendChild(m); return; }
+      var v = VARIANTS[p.variant];
+      var apns = p.key === 'custom' ? [p.custom.apn] : OPERATORS[p.key].apns;
+      var table = document.createElement('table');
+      var head = document.createElement('tr');
+      ['APN', 'Auth', 'IP', 'XLAT464', 'Proxy'].forEach(function(h) { head.appendChild(th(h)); });
+      table.appendChild(head);
+      apns.forEach(function(n) {
+        v.auths.forEach(function(a) {
+          var tr = document.createElement('tr');
+          tr.appendChild(td(n)); tr.appendChild(td(a));
+          tr.appendChild(td(v.proto === 3 ? 'IPv4 + IPv6' : 'IPv4'));
+          tr.appendChild(td(v.xlat ? 'on' : 'off'));
+          var px = p.custom && p.custom.proxy_host ? p.custom.proxy_host + (p.custom.proxy_port ? ':' + p.custom.proxy_port : '') : '—';
+          tr.appendChild(td(px));
+          table.appendChild(tr);
+        });
+      });
+      box.appendChild(table);
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = ID_PREFIX + '  •  ' + t('pv_id') + '  •  ' + t('pv_uuid');
+      box.appendChild(meta);
+      // رمز در پیش‌نمایش خام نشان داده نمی‌شود
+      raw.textContent = p.custom && p.custom.password ? p.xml.split(esc(p.custom.password)).join('••••') : p.xml;
+    }
+
+    function toggleCustom() {
+      var on = $('apn').value === 'custom';
+      $('customFields').hidden = !on;
+      showError('');
+    }
+
+    function onChange() { showError(''); updatePreview(); }
+
+    // ---------- زبان ----------
+    function applyLang(l) {
+      lang = I18N[l] ? l : 'fa';
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+      document.title = lang === 'fa' ? 'شیطون انتن | Sheitoon Antenna' : 'Sheitoon Antenna | شیطون انتن';
+      Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function(el) { el.textContent = t(el.getAttribute('data-i18n')); });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-ph]'), function(el) { el.placeholder = t(el.getAttribute('data-i18n-ph')); });
+      Array.prototype.forEach.call($('apn').options, function(o) { o.textContent = t('op_' + o.value); });
+      Array.prototype.forEach.call($('variant').options, function(o) { o.textContent = t('var_' + o.value); });
+      $('langBtn').textContent = lang === 'fa' ? 'EN' : 'فا';
+      buildSymptoms();
+      updatePreview();
+      store('lang', lang);
+    }
+
+    // ---------- عیب‌یابی ----------
+    function buildSymptoms() {
+      var sel = $('symptom'), cur = sel.value;
+      sel.textContent = '';
+      var o0 = document.createElement('option'); o0.value = ''; o0.textContent = t('help_pick'); sel.appendChild(o0);
+      HELP_IDS.forEach(function(id) {
+        var o = document.createElement('option'); o.value = id; o.textContent = t('h_' + id + '_t'); sel.appendChild(o);
+      });
+      sel.value = cur;
+      showHelp();
+    }
+
+    function showHelp() {
+      var id = $('symptom').value, ol = $('helpSteps'), btn = $('helpApply');
+      ol.textContent = '';
+      btn.hidden = true;
+      if (!id) return;
+      t('h_' + id + '_s').forEach(function(s) { var li = document.createElement('li'); li.textContent = s; ol.appendChild(li); });
+      var v = t('h_' + id + '_v');
+      if (v) { btn.textContent = t('help_apply').replace('{v}', v); btn.setAttribute('data-v', v); btn.hidden = false; }
+    }
+
+    // t() برای آرایه‌ها هم کار می‌کند چون مقدار خام را برمی‌گرداند
+
+    // ---------- راه‌اندازی ----------
+    $('apn').addEventListener('change', function() { toggleCustom(); store('op', $('apn').value); onChange(); });
+    $('variant').addEventListener('change', function() { store('variant', $('variant').value); onChange(); });
+    ['profileName', 'customApn', 'customUser', 'customPass', 'customProxy', 'customPort'].forEach(function(id) { $(id).addEventListener('input', onChange); });
+    $('langBtn').addEventListener('click', function() { applyLang(lang === 'fa' ? 'en' : 'fa'); });
+    $('symptom').addEventListener('change', showHelp);
+    $('helpApply').addEventListener('click', function() {
+      var v = $('helpApply').getAttribute('data-v');
+      if (v) { $('variant').value = v; store('variant', v); onChange(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    });
+
+    $('config-form').addEventListener('submit', function(e) {
       e.preventDefault();
+      var p = currentProfile();
+      if (p.err) { showError(p.err); return; }
+      showError('');
 
-      var btn = document.getElementById('submitBtn');
-      var msg = document.getElementById('successMsg');
-      var apn = document.getElementById('apn').value;
-      var nameInput = document.getElementById('profileName').value.trim();
-      var profileName = nameInput || ('شیطون انتن - ' + apn);
-
+      var btn = $('submitBtn'), msg = $('successMsg');
       btn.classList.add('loading');
-      btn.querySelector('span').textContent = 'در حال ساخت...';
+      btn.querySelector('span').textContent = t('btn_busy');
 
       setTimeout(function() {
-        var u1 = uuid(), u2 = uuid(), u3 = uuid(), u4 = uuid(), u5 = uuid();
-        var isDual = (apn === 'dual');
-        var apnList = isDual ? ['mcinet', 'mtnirancell'] : [apn];
-        var fileName = isDual ? 'sheitoon-dual-' + Date.now() : 'sheitoon-' + apn + '-' + Date.now();
-
-        function makeApnDict(name, auth, mask) {
-          return '        <dict>\n' +
-'          <key>Name</key>\n' +
-'          <string>' + name + '</string>\n' +
-'          <key>AuthenticationType</key>\n' +
-'          <string>' + auth + '</string>\n' +
-'          <key>AllowedProtocolMask</key>\n' +
-'          <integer>' + mask + '</integer>\n' +
-'          <key>AllowedProtocolMaskInDomesticRoaming</key>\n' +
-'          <integer>' + mask + '</integer>\n' +
-'          <key>AllowedProtocolMaskInRoaming</key>\n' +
-'          <integer>' + mask + '</integer>\n' +
-'          <key>DefaultProtocolMask</key>\n' +
-'          <integer>' + mask + '</integer>\n' +
-'          <key>EnableXLAT464</key>\n' +
-'          <true/>\n' +
-'          <key>Username</key>\n' +
-'          <string></string>\n' +
-'          <key>Password</key>\n' +
-'          <string></string>\n' +
-'        </dict>\n';
-        }
-
-        var apnsXml = '';
-        apnList.forEach(function(n) {
-          apnsXml += makeApnDict(n, 'PAP', 3);
-          apnsXml += makeApnDict(n, 'CHAP', 3);
-          apnsXml += makeApnDict(n, 'PAP', 1);
-        });
-
-        var attachName = isDual ? 'mcinet' : apn;
-        var displayName = isDual ? (nameInput || 'شیطون انتن - دوتایی') : profileName;
-
-        var plist = '<?xml version="1.0" encoding="UTF-8"?>\n' +
-'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n' +
-'<plist version="1.0">\n' +
-'<dict>\n' +
-'  <key>PayloadContent</key>\n' +
-'  <array>\n' +
-'    <dict>\n' +
-'      <key>PayloadDisplayName</key>\n' +
-'      <string>Cellular</string>\n' +
-'      <key>PayloadIdentifier</key>\n' +
-'      <string>com.apple.cellular.' + u1 + '</string>\n' +
-'      <key>PayloadType</key>\n' +
-'      <string>com.apple.cellular</string>\n' +
-'      <key>PayloadUUID</key>\n' +
-'      <string>' + u1 + '</string>\n' +
-'      <key>PayloadVersion</key>\n' +
-'      <integer>1</integer>\n' +
-'      <key>APNs</key>\n' +
-'      <array>\n' +
-apnsXml +
-'      </array>\n' +
-'      <key>AttachAPN</key>\n' +
-'      <dict>\n' +
-'        <key>Name</key>\n' +
-'        <string>' + attachName + '</string>\n' +
-'        <key>AuthenticationType</key>\n' +
-'        <string>PAP</string>\n' +
-'        <key>AllowedProtocolMask</key>\n' +
-'        <integer>3</integer>\n' +
-'        <key>Username</key>\n' +
-'        <string></string>\n' +
-'        <key>Password</key>\n' +
-'        <string></string>\n' +
-'      </dict>\n' +
-'    </dict>\n' +
-'  </array>\n' +
-'  <key>PayloadDisplayName</key>\n' +
-'  <string>' + displayName + '</string>\n' +
-'  <key>PayloadIdentifier</key>\n' +
-'  <string>com.sheitoon.antenna.' + u2 + '</string>\n' +
-'  <key>PayloadRemovalDisallowed</key>\n' +
-'  <false/>\n' +
-'  <key>PayloadType</key>\n' +
-'  <string>Configuration</string>\n' +
-'  <key>PayloadUUID</key>\n' +
-'  <string>' + u3 + '</string>\n' +
-'  <key>PayloadVersion</key>\n' +
-'  <integer>1</integer>\n' +
-'  <key>PayloadDescription</key>\n' +
-'  <string>پروفایل قوی بازگردانی آنتن - شیطون انتن</string>\n' +
-'  <key>PayloadOrganization</key>\n' +
-'  <string>شیطون انتن</string>\n' +
-'</dict>\n' +
-'</plist>';
-
-        var blob = new Blob([plist], { type: 'application/x-apple-aspen-config' });
+        var blob = new Blob([p.xml], { type: 'application/x-apple-aspen-config' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = fileName + '.mobileconfig';
+        a.download = 'sheitoon-' + p.key + '-' + p.variant + '.mobileconfig';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
 
         btn.classList.remove('loading');
-        btn.querySelector('span').textContent = 'ساخت و دانلود پروفایل';
+        btn.querySelector('span').textContent = t('btn_make');
         msg.style.display = 'block';
         setTimeout(function() { msg.style.display = 'none'; }, 3500);
-      }, 500);
+      }, 300);
     });
+
+    (function init() {
+      var op = load('op'), vr = load('variant');
+      if (op && Array.prototype.some.call($('apn').options, function(o) { return o.value === op; })) $('apn').value = op;
+      if (vr && VARIANTS[vr]) $('variant').value = vr;
+      toggleCustom();
+      applyLang(load('lang') === 'en' ? 'en' : 'fa');
+    })();
   </script>
 </body>
 </html>
