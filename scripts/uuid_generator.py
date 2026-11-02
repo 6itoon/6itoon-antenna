@@ -25,7 +25,7 @@ def main():
     print(f"UUID استاندارد : {u}")
     print(f"UUID بدون خط  : {u_hex}")
     print()
-    print("این کد را در بخش PayloadUUID فایل mobileconfig قرار دهید.")
+    print("فقط برای ساخت دستی PayloadUUID است؛ generate_profile.py و سایت خودشان UUID می‌سازند.\nPayloadIdentifier را عوض نکنید (باید ثابت بماند تا نصب مجدد جایگزین شود).")
     print()
     
     if len(sys.argv) > 1 and sys.argv[1] == "--simple":
